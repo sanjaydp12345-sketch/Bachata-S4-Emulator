@@ -1,0 +1,8 @@
+# Keep project specific files only
+**/build/
+/local.properties
+/.idea/
+/.gradle/
+*.iml
+*.class
+.DS_Store
