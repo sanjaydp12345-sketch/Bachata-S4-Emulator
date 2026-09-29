@@ -1,26 +1,17 @@
 #include "GameFileDetector.h"
+#include <algorithm>
+#include <cctype>
 
-namespace bachata {
-namespace fs {
-
+namespace bachata { namespace fs {
+static std::string lower(std::string value) {
+    std::transform(value.begin(), value.end(), value.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+    return value;
+}
 GameFileDetector::FileType GameFileDetector::detect(const std::string& path) {
-    const std::string lower = path;
-    if (lower.find(".iso") != std::string::npos) {
-        return FileType::Iso;
-    }
-    if (lower.find(".pkg") != std::string::npos) {
-        return FileType::Pkg;
-    }
-    if (lower.empty()) {
-        return FileType::Unknown;
-    }
-    return FileType::Folder;
+    const auto value = lower(path);
+    if (value.size() >= 4 && value.ends_with(".iso")) return FileType::Iso;
+    if (value.size() >= 4 && value.ends_with(".pkg")) return FileType::Pkg;
+    return value.empty() ? FileType::Unknown : FileType::Folder;
 }
-
-bool GameFileDetector::validateStructure(const std::string& path) {
-    (void)path;
-    return true;
-}
-
-} // namespace fs
-} // namespace bachata
+bool GameFileDetector::validateStructure(const std::string& path) { return !path.empty(); }
+}}

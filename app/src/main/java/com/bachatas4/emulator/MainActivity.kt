@@ -9,10 +9,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme(
-                colorScheme = MaterialTheme.colorScheme,
-                typography = MaterialTheme.typography
-            ) {
+            MaterialTheme {
                 BachataS4App()
             }
         }
